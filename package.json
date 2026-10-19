@@ -1,0 +1,17 @@
+{
+  "name": "11s24035-pabwe2026-typing-speed-battle",
+  "version": "1.0.0",
+  "description": "Typing Speed Battle - Aplikasi Uji Kecepatan Mengetik Berbasis JavaScript Murni",
+  "type": "module",
+  "scripts": {
+    "test": "node tests/game.test.js"
+  },
+  "keywords": [
+    "typing-test",
+    "vanilla-js",
+    "pabwe",
+    "del"
+  ],
+  "author": "Immanuel Parasian Lumbantobing (11S24035)",
+  "license": "MIT"
+}

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Typing Speed Battle - Uji dan latih kecepatan serta akurasi mengetik Anda dengan mode kata Umum dan IT secara real-time.">
+  <title>Typing Speed Battle | Tes Kecepatan Mengetik</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="app-wrapper">
+    <!-- Header Aplikasi -->
+    <header class="app-header">
+      <div class="header-badge">PABWE Project</div>
+      <h1 class="header-title">Typing Speed Battle</h1>
+      <p class="header-subtitle">Uji batas kecepatan jari dan ketepatan analisismu dalam mengetik kata</p>
+    </header>
+
+    <!-- Konten Utama -->
+    <main class="app-main">
+      <!-- Pengaturan Game & Statistik Bar -->
+      <section class="game-dashboard" aria-label="Pengaturan dan Statistik Permainan">
+        <div class="settings-group">
+          <div class="form-control">
+            <label for="mode-select" class="form-label">Kategori Kata</label>
+            <div class="select-wrapper">
+              <select id="mode-select" class="custom-select" name="mode">
+                <option value="umum" selected>Kata Umum</option>
+                <option value="it">Dunia IT / Pemrograman</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-control">
+            <label for="duration-select" class="form-label">Durasi Waktu</label>
+            <div class="select-wrapper">
+              <select id="duration-select" class="custom-select" name="duration">
+                <option value="30">30 Detik</option>
+                <option value="60" selected>60 Detik</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="stats-group" aria-live="polite">
+          <article class="stat-card">
+            <span class="stat-label">Sisa Waktu</span>
+            <div class="stat-value-group">
+              <span id="timer" class="stat-number">60</span>
+              <span class="stat-unit">dtk</span>
+            </div>
+          </article>
+
+          <article class="stat-card">
+            <span class="stat-label">Kecepatan (WPM)</span>
+            <div class="stat-value-group">
+              <span id="wpm" class="stat-number">0</span>
+              <span class="stat-unit">KPM</span>
+            </div>
+          </article>
+
+          <article class="stat-card">
+            <span class="stat-label">Akurasi</span>
+            <div class="stat-value-group">
+              <span id="accuracy" class="stat-number">100</span>
+              <span class="stat-unit">%</span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- Area Pengetikan -->
+      <section class="battle-arena" aria-label="Area Pengetikan">
+        <!-- Display Teks Target -->
+        <div id="words-display" class="words-container" aria-label="Kata target untuk diketik" tabindex="0">
+          <span class="word current"><span class="char active">k</span><span class="char">o</span><span class="char">m</span><span class="char">p</span><span class="char">u</span><span class="char">t</span><span class="char">e</span><span class="char">r</span></span>
+          <span class="word"><span class="char">j</span><span class="char">a</span><span class="char">r</span><span class="char">i</span><span class="char">n</span><span class="char">g</span><span class="char">a</span><span class="char">n</span></span>
+          <span class="word"><span class="char">a</span><span class="char">l</span><span class="char">g</span><span class="char">o</span><span class="char">r</span><span class="char">i</span><span class="char">t</span><span class="char">m</span><span class="char">a</span></span>
+          <span class="word"><span class="char">p</span><span class="char">e</span><span class="char">m</span><span class="char">r</span><span class="char">o</span><span class="char">g</span><span class="char">r</span><span class="char">a</span><span class="char">m</span><span class="char">a</span><span class="char">n</span></span>
+          <span class="word"><span class="char">s</span><span class="char">i</span><span class="char">s</span><span class="char">t</span><span class="char">e</span><span class="char">m</span></span>
+          <span class="word"><span class="char">d</span><span class="char">a</span><span class="char">t</span><span class="char">a</span></span>
+          <span class="word"><span class="char">a</span><span class="char">p</span><span class="char">l</span><span class="char">i</span><span class="char">k</span><span class="char">a</span><span class="char">s</span><span class="char">i</span></span>
+          <span class="word"><span class="char">k</span><span class="char">e</span><span class="char">a</span><span class="char">m</span><span class="char">a</span><span class="char">n</span><span class="char">a</span><span class="char">n</span></span>
+        </div>
+
+        <!-- Input Pengetikan & Tombol Restart -->
+        <div class="typing-action-bar">
+          <div class="input-field-wrapper">
+            <label for="typing-input" class="sr-only">Ketik kata di sini</label>
+            <input 
+              type="text" 
+              id="typing-input" 
+              class="typing-input" 
+              placeholder="Ketik kata di sini untuk memulai tes..." 
+              autocomplete="off" 
+              autocapitalize="off" 
+              spellcheck="false" 
+              autofocus
+            >
+          </div>
+          <button type="button" id="restart-btn" class="btn btn-secondary restart-btn" title="Ulangi Tes (Esc)">
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+              <path d="M3 3v5h5"/>
+            </svg>
+            <span>Ulangi Tes</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Panel Hasil Tes (Tampil saat tes selesai) -->
+      <section id="result-panel" class="result-panel is-hidden" aria-labelledby="result-title">
+        <div class="result-header">
+          <span class="result-badge">Selesai!</span>
+          <h2 id="result-title" class="result-title">Hasil Akhir Kecepatanmu</h2>
+          <p class="result-summary">Performa luar biasa! Simpan rekor skormu ke dalam Leaderboard.</p>
+        </div>
+
+        <div class="result-stats-grid">
+          <div class="result-card highlight">
+            <span class="result-card-label">Kecepatan Bersih</span>
+            <span class="result-card-val"><span class="result-wpm-val">0</span> <small>WPM</small></span>
+          </div>
+          <div class="result-card">
+            <span class="result-card-label">Ketepatan Akurasi</span>
+            <span class="result-card-val"><span class="result-acc-val">100</span> <small>%</small></span>
+          </div>
+          <div class="result-card">
+            <span class="result-card-label">Karakter Benar / Salah</span>
+            <span class="result-card-val"><span class="result-chars-val">0 / 0</span></span>
+          </div>
+        </div>
+
+        <form class="save-score-form" onsubmit="return false;">
+          <div class="form-control form-control-inline">
+            <label for="name-input" class="form-label">Nama Panggilan / Alias</label>
+            <div class="save-input-group">
+              <input 
+                type="text" 
+                id="name-input" 
+                class="name-input" 
+                maxlength="15" 
+                placeholder="Masukkan nama pemain..." 
+                required
+              >
+              <button type="submit" id="save-btn" class="btn btn-primary">
+                Simpan Skor
+              </button>
+            </div>
+          </div>
+        </form>
+      </section>
+
+      <!-- Bagian Leaderboard -->
+      <section class="leaderboard-section" aria-labelledby="leaderboard-title">
+        <div class="section-header">
+          <div class="section-title-wrap">
+            <svg class="section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/>
+              <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/>
+              <path d="M4 22h16"/>
+              <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/>
+              <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/>
+              <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/>
+            </svg>
+            <div>
+              <h2 id="leaderboard-title" class="section-title">Papan Skor Tertinggi</h2>
+              <p class="section-desc">10 pemain tercepat yang tersimpan di memori peramban</p>
+            </div>
+          </div>
+
+          <button type="button" id="clear-btn" class="btn btn-ghost clear-btn" title="Hapus seluruh riwayat skor di localStorage">
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="3 6 5 6 21 6"/>
+              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+            </svg>
+            <span>Hapus Papan Skor</span>
+          </button>
+        </div>
+
+        <div class="leaderboard-table-container">
+          <div class="table-header-row">
+            <span class="col-rank">#</span>
+            <span class="col-name">Nama Pemain</span>
+            <span class="col-mode">Kategori</span>
+            <span class="col-duration">Waktu</span>
+            <span class="col-acc">Akurasi</span>
+            <span class="col-wpm">WPM</span>
+          </div>
+
+          <!-- Daftar Top 10 Skor -->
+          <ol id="leaderboard-list" class="leaderboard-list">
+            <li class="empty-state">
+              Belum ada rekor skor tersimpan. Selesaikan satu sesi untuk mencatatkan namamu!
+            </li>
+          </ol>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer Aplikasi -->
+    <footer class="app-footer">
+      <p>Proyek Mata Kuliah Pengembangan Aplikasi Berbasis Web (PABWE) &bull; Dibuat dengan HTML, CSS, dan JS Murni</p>
+    </footer>
+  </div>
+
+  <!-- Script ES Module Utama -->
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
